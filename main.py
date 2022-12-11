@@ -117,19 +117,7 @@ async def mailing(message : types.Message, state : FSMContext):
 class AdminState(StatesGroup):
     admin = State()
 
-@dp.message_handler(commands=["add_admin"])
-async def start(message : types.Message):
-    cur1  = connect_admin.cursor()
-    cur1.execute("SELECT * FROM admin;")
-    result = cur1.fetchall()
-    for user in result:
-        
-        if message.from_user.id in user:
-            
-            await message.answer('Введите id админа: ')
-            await AdminState.admin.set()
-    else:
-        await message.answer("У вас нет прав")
+
         
 @dp.message_handler(state=AdminState.admin)
 async def admin_add(message : types.Message,state : FSMContext):
